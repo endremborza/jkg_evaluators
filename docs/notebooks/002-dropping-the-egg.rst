@@ -1,4 +1,4 @@
-1. egg-drop challenge
+2. egg-drop challenge
 ---------------------
 
     we have a 100 story building and 2 eggs. we want to check what is

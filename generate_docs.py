@@ -2,8 +2,11 @@ import subprocess
 import os
 import glob
 
-doc_dir_name = 'docs'
+
 project_name = 'jkg_evaluators'
+include_api_docs = False
+
+doc_dir_name = 'docs'
 author_name = 'Endre Márk Borza'
 doc_notebooks_dir = 'notebooks'
 doc_reqs = ['sphinx', 'graphviz', 'sphinx-automodapi', 'pygments', 'jupyter']
@@ -56,7 +59,7 @@ Welcome to {}'s documentation!
    :maxdepth: 2
    :caption: Contents:
 
-   autosumm
+   {}
 {}
 
 
@@ -66,7 +69,8 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-""".format(project_name, '\n'.join(toc_nbs))
+""".format('api' if include_api_docs else '',
+           project_name, '\n'.join(toc_nbs))
 
 autosumm_rst = """
 
@@ -80,7 +84,7 @@ API
 with open(os.path.join(doc_dir_name, 'index.rst'), 'w') as fp:
     fp.write(index_rst)
 
-with open(os.path.join(doc_dir_name, 'autosumm.rst'), 'w') as fp:
+with open(os.path.join(doc_dir_name, 'api.rst'), 'w') as fp:
     fp.write(autosumm_rst)
 
 with open(os.path.join(doc_dir_name, 'requirements.txt'), 'w') as fp:
