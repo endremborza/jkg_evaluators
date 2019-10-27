@@ -69,8 +69,9 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-""".format('api' if include_api_docs else '',
-           project_name, '\n'.join(toc_nbs))
+""".format(project_name,
+           'api' if include_api_docs else '',
+           '\n'.join(toc_nbs))
 
 autosumm_rst = """
 
