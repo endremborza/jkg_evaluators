@@ -1,0 +1,20 @@
+
+Welcome to jkg_evaluators's documentation!
+================================
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+   autosumm
+   notebooks/000-installation
+   notebooks/001-dragonfind
+   notebooks/002-dropping-the-egg
+
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
