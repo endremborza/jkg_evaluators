@@ -1,1 +1,3 @@
-- first release!
+- add smaller tasks
+- basic assigner
+- util module
