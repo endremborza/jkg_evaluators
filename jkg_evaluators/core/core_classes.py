@@ -1,5 +1,6 @@
 from typing import Callable, Union, Optional, List, Type
 import random
+from copy import deepcopy
 
 
 class EvaluationCaseResult:
@@ -105,7 +106,8 @@ class CompleteEvaluation:
                                  num_kwargs)
 
         for kwarg_idx, case_kwargs in iterable:
-            case = self.case(**case_kwargs)
+            copied_kwargs = deepcopy(case_kwargs)
+            case = self.case(**copied_kwargs)
             act_case_results = case.evaluate(solution)
             self.case_results_list[kwarg_idx] = act_case_results
 
@@ -193,7 +195,10 @@ class CompleteEvaluation:
                     fails.append(0)
                     errors.append(None)
 
-                c_values.append(case_kwargs.get(cvar))
+                try:
+                    c_values.append(case_kwargs[cvar])
+                except KeyError:
+                    c_values.append(idx)
 
         out = {
             cvar: c_values
