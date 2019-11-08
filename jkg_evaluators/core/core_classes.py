@@ -4,11 +4,12 @@ from copy import deepcopy
 
 
 class EvaluationCaseResult:
-
-    def __init__(self,
-                 is_successful: bool = False,
-                 performance: Optional[Union[float, int]] = None,
-                 e: Optional[Exception] = None):
+    def __init__(
+        self,
+        is_successful: bool = False,
+        performance: Optional[Union[float, int]] = None,
+        e: Optional[Exception] = None,
+    ):
 
         self.is_successful = is_successful
         self.performance = performance
@@ -16,10 +17,11 @@ class EvaluationCaseResult:
 
 
 class CasePerformance:
-
-    def __init__(self,
-                 is_successful: bool = False,
-                 performance: Optional[Union[float, int]] = None):
+    def __init__(
+        self,
+        is_successful: bool = False,
+        performance: Optional[Union[float, int]] = None,
+    ):
 
         self.is_successful = is_successful
         self.performance = performance
@@ -44,9 +46,7 @@ class EvalCase:
             out = CasePerformance()
 
         return EvaluationCaseResult(
-            is_successful=out.is_successful,
-            e=e,
-            performance=out.performance
+            is_successful=out.is_successful, e=e, performance=out.performance
         )
 
     def describe_case(self):
@@ -54,10 +54,7 @@ class EvalCase:
 
 
 class CompleteEvaluation:
-
-    def __init__(self,
-                 case_kwarg_list: List[dict],
-                 case: Type[EvalCase]):
+    def __init__(self, case_kwarg_list: List[dict], case: Type[EvalCase]):
 
         self.case = case
         self.case_kwarg_list = case_kwarg_list
@@ -73,6 +70,7 @@ class CompleteEvaluation:
     def visualize(self, solution: Callable):
 
         import matplotlib.pyplot as plt
+
         self._run_all(solution)
 
         data = self._get_performance_plot()
@@ -80,16 +78,18 @@ class CompleteEvaluation:
 
         for label, ser in data.items():
             if label != self.case.main_complexity_var:
-                if label == '-Successes':
+                if label == "-Successes":
                     marker = None
                 else:
-                    marker = 'o'
-                plt.plot(self.case.main_complexity_var,
-                         label,
-                         marker=marker,
-                         linestyle='',
-                         data=data)
-        plt.ylabel('performance')
+                    marker = "o"
+                plt.plot(
+                    self.case.main_complexity_var,
+                    label,
+                    marker=marker,
+                    linestyle="",
+                    data=data,
+                )
+        plt.ylabel("performance")
         plt.xlabel(self.case.main_complexity_var)
         plt.legend()
         plt.show()
@@ -102,8 +102,7 @@ class CompleteEvaluation:
         self.error_list = [None] * num_kwargs
         self.performance_list = [None] * num_kwargs
 
-        iterable = random.sample(list(enumerate(self.case_kwarg_list)),
-                                 num_kwargs)
+        iterable = random.sample(list(enumerate(self.case_kwarg_list)), num_kwargs)
 
         for kwarg_idx, case_kwargs in iterable:
             copied_kwargs = deepcopy(case_kwargs)
@@ -118,8 +117,7 @@ class CompleteEvaluation:
 
     def _get_str_results(self) -> str:
 
-        numeric_performances = [p for p in self.performance_list
-                                if p is not None]
+        numeric_performances = [p for p in self.performance_list if p is not None]
 
         if len(numeric_performances) > 0:
 
@@ -131,10 +129,11 @@ class CompleteEvaluation:
                 worstfun = max
 
             performance_summas = [
-                '- best performance: {}'.format(bestfun(numeric_performances)),
-                '- worst performance: {}'.format(worstfun(numeric_performances)),
-                '- mean performance: {}'.format(sum(numeric_performances) /
-                                                len(numeric_performances)),
+                "- best performance: {}".format(bestfun(numeric_performances)),
+                "- worst performance: {}".format(worstfun(numeric_performances)),
+                "- mean performance: {}".format(
+                    sum(numeric_performances) / len(numeric_performances)
+                ),
             ]
         else:
             performance_summas = []
@@ -148,25 +147,29 @@ class CompleteEvaluation:
                 act_kwargs = self.case_kwarg_list[idx]
                 if e is not None:
                     error_strings.append(
-                        '\n\n ERROR at: \n {} \n - {} ({})'.format(act_kwargs,
-                                                                   type(e).__name__,
-                                                                   e)
+                        "\n\n ERROR at: \n {} \n - {} ({})".format(
+                            act_kwargs, type(e).__name__, e
+                        )
                     )
                 else:
                     miss_strings.append(
-                        '\n\n BAD SOLUTION at: \n {}'.format(act_kwargs)
+                        "\n\n BAD SOLUTION at: \n {}".format(act_kwargs)
                     )
 
-        return '\n'.join(
-            ['- success rate: {}/{} ({}%)'.format(sum(self.success_list),
-                                                  len(self.case_kwarg_list),
-                                                  round(sum(self.success_list) /
-                                                        len(self.case_kwarg_list),
-                                                        2) * 100),
-             '- error count: {}'.format(sum([e is not None for e in self.error_list])),
-             *performance_summas,
-             *miss_strings[:10],
-             *error_strings[:10]]
+        return "\n".join(
+            [
+                "- success rate: {}/{} ({}%)".format(
+                    sum(self.success_list),
+                    len(self.case_kwarg_list),
+                    round(sum(self.success_list) / len(self.case_kwarg_list), 2) * 100,
+                ),
+                "- error count: {}".format(
+                    sum([e is not None for e in self.error_list])
+                ),
+                *performance_summas,
+                *miss_strings[:10],
+                *error_strings[:10],
+            ]
         )
 
     def _get_performance_plot(self) -> dict:
@@ -200,12 +203,12 @@ class CompleteEvaluation:
                 except KeyError:
                     c_values.append(idx)
 
-        out = {
-            cvar: c_values
-        }
-        for ser, label in [(successes, 'Successes'),
-                           (fails, 'Bad solutions'),
-                           (errors, 'Errors')]:
+        out = {cvar: c_values}
+        for ser, label in [
+            (successes, "Successes"),
+            (fails, "Bad solutions"),
+            (errors, "Errors"),
+        ]:
             if sum([e is None for e in ser]) < len(ser):
                 out[label] = ser
         return out
@@ -215,7 +218,7 @@ class CompleteEvaluation:
         if len(self.case_results_list) > 0:
             return self._get_str_results()
         else:
-            return 'not yet evaluated'
+            return "not yet evaluated"
 
     def __repr__(self):
 
