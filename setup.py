@@ -1,30 +1,34 @@
+import toml
+import importlib
 from setuptools import find_packages, setup
-import jkg_evaluators
 
-pkg_name = 'jkg_evaluators'
+pytom = toml.load("pyproject.toml")
+package_name = pytom["project"]["name"]
+author_name = " - ".join(pytom["project"]["authors"])
 
-version = jkg_evaluators.__version__
+mymodule = importlib.import_module(package_name)
 
 
 with open("README.md") as fp:
     long_description = fp.read()
 
-if __name__ == '__main__':
+with open("requirements.txt") as fp:
+    requirements = fp.read().strip().split()
+
+if __name__ == "__main__":
     setup(
-        name=pkg_name,
-        version=version,
-        description="challenge evaluation",
+        name=package_name,
+        version=mymodule.__version__,
+        description=pytom["project"]["description"],
         long_description=long_description,
-        long_description_content_type="text/markdown",
-        license='MIT',
-        classifiers=[
-            "License :: OSI Approved :: MIT License",
-        ],
-        url='https://github.com/endremborza/{}'.format(pkg_name),
-        keywords='education challenges',
-        author='Endre Márk Borza',
-        author_email='endremborza@gmail.com',
+        license="MIT",
+        classifiers=["License :: OSI Approved :: MIT License"],
+        url=pytom["project"]["url"],
+        keywords=pytom["project"].get("keywords"),
+        author=author_name,
         packages=find_packages(),
         include_package_data=True,
-        python_requires='>=3.6',
+        python_requires=pytom["project"]["python"],
+        platforms="any",
+        install_requires=requirements,
     )
