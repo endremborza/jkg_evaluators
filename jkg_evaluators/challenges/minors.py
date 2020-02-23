@@ -28,7 +28,9 @@ class IndexWithMostALetters(EvalCase):
 
         is_success = out == true_solution
 
-        return CasePerformance(is_successful=is_success, performance=int(is_success))
+        return CasePerformance(
+            is_successful=is_success, performance=int(is_success)
+        )
 
 
 class LetterOccurrences(EvalCase):
@@ -50,7 +52,9 @@ class LetterOccurrences(EvalCase):
 
         is_success = out == true_solution
 
-        return CasePerformance(is_successful=is_success, performance=int(is_success))
+        return CasePerformance(
+            is_successful=is_success, performance=int(is_success)
+        )
 
 
 class WordWithMostOfLetter(EvalCase):
@@ -66,7 +70,9 @@ class WordWithMostOfLetter(EvalCase):
         true_solution = ""
         max_num = 0
         for word in self.list_of_words:
-            letter_count = sum([l == self.letter.lower() for l in word])
+            letter_count = sum(
+                [ll == self.letter.lower() for ll in word.lower()]
+            )
             if letter_count > max_num:
                 max_num = letter_count
                 true_solution = word
@@ -75,7 +81,9 @@ class WordWithMostOfLetter(EvalCase):
 
         is_success = out == true_solution
 
-        return CasePerformance(is_successful=is_success, performance=int(is_success))
+        return CasePerformance(
+            is_successful=is_success, performance=int(is_success)
+        )
 
 
 class LargestMultiple(EvalCase):
@@ -101,7 +109,9 @@ class LargestMultiple(EvalCase):
 
         is_success = out == true_solution
 
-        return CasePerformance(is_successful=is_success, performance=int(is_success))
+        return CasePerformance(
+            is_successful=is_success, performance=int(is_success)
+        )
 
 
 class SumOfDistinctOddPosInts(EvalCase):
@@ -122,7 +132,9 @@ class SumOfDistinctOddPosInts(EvalCase):
 
         is_success = out == true_solution
 
-        return CasePerformance(is_successful=is_success, performance=int(is_success))
+        return CasePerformance(
+            is_successful=is_success, performance=int(is_success)
+        )
 
 
 class LargestAscending(EvalCase):
@@ -148,7 +160,9 @@ class LargestAscending(EvalCase):
 
         is_success = out == true_solution
 
-        return CasePerformance(is_successful=is_success, performance=int(is_success))
+        return CasePerformance(
+            is_successful=is_success, performance=int(is_success)
+        )
 
 
 class SmallestWhereDoubleAlso(EvalCase):
@@ -161,7 +175,9 @@ class SmallestWhereDoubleAlso(EvalCase):
     def _evaluate(self, solution: Callable) -> CasePerformance:
 
         filtered = [
-            x for x in self.list_of_numbers if ((x * 2) in self.list_of_numbers)
+            x
+            for x in self.list_of_numbers
+            if ((x * 2) in self.list_of_numbers)
         ]
 
         try:
@@ -173,7 +189,9 @@ class SmallestWhereDoubleAlso(EvalCase):
 
         is_success = out == true_solution
 
-        return CasePerformance(is_successful=is_success, performance=int(is_success))
+        return CasePerformance(
+            is_successful=is_success, performance=int(is_success)
+        )
 
 
 class LargestEvenDivided(EvalCase):
@@ -202,7 +220,9 @@ class LargestEvenDivided(EvalCase):
 
         is_success = out == true_solution
 
-        return CasePerformance(is_successful=is_success, performance=int(is_success))
+        return CasePerformance(
+            is_successful=is_success, performance=int(is_success)
+        )
 
 
 class LastWithThreeMultDiff(EvalCase):
@@ -225,11 +245,13 @@ class LastWithThreeMultDiff(EvalCase):
 
         is_success = out == true_solution
 
-        return CasePerformance(is_successful=is_success, performance=int(is_success))
+        return CasePerformance(
+            is_successful=is_success, performance=int(is_success)
+        )
 
 
 word_lists = [
-    {"list_of_words": ["b", "bb", "bbb"]},
+    {"list_of_words": ["b", "bb", "bBb"]},
     {"list_of_words": ["aa", "aaa", "aa", "a"]},
     {"list_of_words": ["ba", "babab", "AaAaA", "Ahha"]},
     {"list_of_words": ["123", "lala", "", "", "", "aA"]},
@@ -251,7 +273,8 @@ for _r in range(10, 501):
             "list_of_words": [
                 "".join(
                     random.choices(
-                        string.ascii_letters + string.digits, k=random.randint(0, 120)
+                        string.ascii_letters + string.digits,
+                        k=random.randint(0, 120),
                     )
                 )
                 for _ in range(_r)
@@ -264,7 +287,8 @@ for _r in range(10, 501):
     )
 
 words_with_letter = [
-    {"letter": random.choice(string.ascii_letters), **kwargs} for kwargs in word_lists
+    {"letter": random.choice(string.ascii_letters), **kwargs}
+    for kwargs in word_lists
 ]
 
 numberlists_with_numebrs = [
@@ -283,7 +307,9 @@ word_with_most_of_letters = CompleteEvaluation(
     case_kwarg_list=words_with_letter, case=WordWithMostOfLetter
 )
 
-largest_multiple = CompleteEvaluation(case_kwarg_list=num_lists, case=LargestMultiple)
+largest_multiple = CompleteEvaluation(
+    case_kwarg_list=num_lists, case=LargestMultiple
+)
 
 sum_odd_positives = CompleteEvaluation(
     case_kwarg_list=num_lists, case=SumOfDistinctOddPosInts

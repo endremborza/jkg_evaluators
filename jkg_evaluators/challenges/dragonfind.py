@@ -18,7 +18,9 @@ class DragonFindCase(EvalCase):
 
         is_success = out == self.dragon_coming_to
 
-        return CasePerformance(is_successful=is_success, performance=self.looks)
+        return CasePerformance(
+            is_successful=is_success, performance=self.looks
+        )
 
     def is_dead(self, k):
         self.looks += 1

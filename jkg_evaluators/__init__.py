@@ -1,6 +1,6 @@
-from .challenges.egg import eggdrop_100floor_2egg
-from .challenges.dragonfind import dragonfind_10_to_500
-from .challenges.minors import (
+from .challenges.egg import eggdrop_100floor_2egg  # noqa
+from .challenges.dragonfind import dragonfind_10_to_500  # noqa
+from .challenges.minors import (  # noqa
     string_with_most_a_letters,
     largest_multiple,
     sum_odd_positives,

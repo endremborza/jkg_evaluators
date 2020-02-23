@@ -1,4 +1,4 @@
-from .core_classes import (
+from .core_classes import (  # noqa
     EvalCase,
     EvaluationCaseResult,
     CompleteEvaluation,

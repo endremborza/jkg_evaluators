@@ -58,7 +58,9 @@ class CompleteEvaluation:
 
         self.case = case
         self.case_kwarg_list = case_kwarg_list
-        self.case_results_list = [EvaluationCaseResult()] * len(case_kwarg_list)
+        self.case_results_list = [EvaluationCaseResult()] * len(
+            case_kwarg_list
+        )
         self.success_list = [False] * len(case_kwarg_list)
         self.error_list = [None] * len(case_kwarg_list)
         self.performance_list = [None] * len(case_kwarg_list)
@@ -102,7 +104,9 @@ class CompleteEvaluation:
         self.error_list = [None] * num_kwargs
         self.performance_list = [None] * num_kwargs
 
-        iterable = random.sample(list(enumerate(self.case_kwarg_list)), num_kwargs)
+        iterable = random.sample(
+            list(enumerate(self.case_kwarg_list)), num_kwargs
+        )
 
         for kwarg_idx, case_kwargs in iterable:
             copied_kwargs = deepcopy(case_kwargs)
@@ -117,7 +121,9 @@ class CompleteEvaluation:
 
     def _get_str_results(self) -> str:
 
-        numeric_performances = [p for p in self.performance_list if p is not None]
+        numeric_performances = [
+            p for p in self.performance_list if p is not None
+        ]
 
         if len(numeric_performances) > 0:
 
@@ -130,7 +136,9 @@ class CompleteEvaluation:
 
             performance_summas = [
                 "- best performance: {}".format(bestfun(numeric_performances)),
-                "- worst performance: {}".format(worstfun(numeric_performances)),
+                "- worst performance: {}".format(
+                    worstfun(numeric_performances)
+                ),
                 "- mean performance: {}".format(
                     sum(numeric_performances) / len(numeric_performances)
                 ),
@@ -161,7 +169,10 @@ class CompleteEvaluation:
                 "- success rate: {}/{} ({}%)".format(
                     sum(self.success_list),
                     len(self.case_kwarg_list),
-                    round(sum(self.success_list) / len(self.case_kwarg_list), 2) * 100,
+                    round(
+                        sum(self.success_list) / len(self.case_kwarg_list), 2
+                    )
+                    * 100,
                 ),
                 "- error count: {}".format(
                     sum([e is not None for e in self.error_list])

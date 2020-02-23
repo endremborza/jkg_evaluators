@@ -20,9 +20,13 @@ class BasicEggCase(EvalCase):
 
         out = solution(self.throw_attempt)
 
-        is_success = (out == self.max_floor) and (not self.attempted_after_ran_out)
+        is_success = (out == self.max_floor) and (
+            not self.attempted_after_ran_out
+        )
 
-        return CasePerformance(is_successful=is_success, performance=self.attempts)
+        return CasePerformance(
+            is_successful=is_success, performance=self.attempts
+        )
 
     def throw_attempt(self, k):
         if self.broken_eggs == self.egg_count:
@@ -37,7 +41,8 @@ class BasicEggCase(EvalCase):
 
 eggdrop_100floor_2egg = CompleteEvaluation(
     case_kwarg_list=[
-        {"egg_count": 2, "floor_count": 100, "max_floor": i} for i in range(0, 101)
+        {"egg_count": 2, "floor_count": 100, "max_floor": i}
+        for i in range(0, 101)
     ],
     case=BasicEggCase,
 )
