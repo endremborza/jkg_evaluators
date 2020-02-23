@@ -34,7 +34,7 @@ def get_hotel_data(data_root="data"):
         data_size = data_size_k * 1000
         dl_path = f"https://borza-hotelcom-data.s3.eu-central-1.amazonaws.com/challenge-{data_size}.csv"
         df = pd.read_csv(dl_path)
-        write_path = os.path.join(data_root, f"data-{data_size}.csv")
+        write_path = os.path.join(data_root, f"{data_size}.csv")
         df.to_csv(write_path, index=False)
 
 
