@@ -9,8 +9,8 @@ from .comparator_class import SolutionComparator
 def _create_hotel_input(size):
     return [
         {
-            "lat": random.normalvariate(0, 1) * 80,
-            "lon": random.normalvariate(0, 1) * 180,
+            "lat": (random.betavariate(3, 3) - 0.5) * 125,
+            "lon": (random.betavariate(3, 3) - 0.5) * 300,
         }
         for _ in range(size)
     ]
