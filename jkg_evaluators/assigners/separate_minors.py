@@ -19,7 +19,9 @@ def dump_separated_minor_nb(
     task_cell_lists = []
     for idx, cell in enumerate(cells):
         if cell["source"][0].startswith("####"):
-            task_cell_lists.append(cells[idx : idx + 4])
+            start_ind = idx
+            end_ind = idx + 4
+            task_cell_lists.append(cells[start_ind:end_ind])
 
     random.shuffle(members)
 
