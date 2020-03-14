@@ -3,6 +3,7 @@ import os
 import json
 import random
 import pandas as pd
+import numpy as np
 from .comparator_class import SolutionComparator
 
 
@@ -16,6 +17,24 @@ def _create_hotel_input(size):
     ]
 
 
+def _create_hotel_filter_input(size):
+    return [
+        {
+            "lat": (random.betavariate(3, 3) - 0.5) * 125,
+            "lon": (random.betavariate(3, 3) - 0.5) * 300,
+            "stars": np.linspace(0, 5, 11)[np.random.randint(11)],
+            **_get_price_pair()
+        }
+        for _ in range(size)
+    ]
+
+
+def _get_price_pair():
+    prices = np.sort(np.random.exponential(70, size=2))
+    return {'min_price': prices[0],
+            'max_price': prices[1]}
+
+
 class HotelSolutionComparator(SolutionComparator):
     @staticmethod
     def _get_input(size):
@@ -25,6 +44,12 @@ class HotelSolutionComparator(SolutionComparator):
     def _dump_data(size, path):
         data_path = os.path.join("data", f"{size}.csv")
         shutil.copy(data_path, path)
+
+
+class HotelFilterSolutionComparator(HotelSolutionComparator):
+    @staticmethod
+    def _get_input(size):
+        return _create_hotel_filter_input(size)
 
 
 def get_hotel_data(data_root="data"):
@@ -42,5 +67,11 @@ def get_hotel_data(data_root="data"):
 
 def dump_hotel_input(size, path="inputs.json"):
     obj = _create_hotel_input(size)
+    with open(path, "w") as fp:
+        json.dump(obj, fp)
+
+
+def dump_hotel_filter_input(size, path="inputs.json"):
+    obj = _create_hotel_filter_input(size)
     with open(path, "w") as fp:
         json.dump(obj, fp)

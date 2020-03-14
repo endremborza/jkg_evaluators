@@ -50,7 +50,7 @@ class SolutionComparator:
             command_start_time = time.time()
             _proc = subprocess.Popen(
                 command.split(),
-                stdout=subprocess.PIPE,
+                # stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
                 cwd=self._tmp_dir,
             )
@@ -61,7 +61,7 @@ class SolutionComparator:
                 self._cleanup()
                 print(f"\n\n{act_solution} {command_name} ERROR:\n--")
                 print(_stderr.decode("utf-8"))
-                raise RuntimeError
+                raise RuntimeError(_stderr.decode("utf-8"))
 
         else:
             print(f"no {command_name} for {act_solution}")
@@ -125,7 +125,7 @@ class SolutionComparator:
                         self._cleanup()
                         raise RuntimeError(
                             f"solution {act_solution} "
-                            "did not produce an output.json"
+                            "did not produce an outputs.json"
                         )
 
                     self.comparison_data.append(
@@ -138,9 +138,11 @@ class SolutionComparator:
                         }
                     )
 
-            self._try_running_command(
-                commands, "cleanup-command", act_solution
-            )
+                self._try_running_command(
+                    commands, "cleanup-command", act_solution
+                )
+
+        self._cleanup()
 
     def plot_comparison(self):
 
@@ -164,6 +166,7 @@ class SolutionComparator:
                         itertools.chain(*df["output_list"].tolist())
                     ).reset_index(drop=True)
                 )
+                .fillna(0)
                 .pipe(
                     lambda df: df.reset_index().pivot_table(
                         columns="solution",
