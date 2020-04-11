@@ -1,3 +1,4 @@
+import os
 from invoke import task
 import io
 
@@ -11,9 +12,13 @@ def new(c):
 
     c.run("python setup.py sdist")
     c.run("twine check dist/*")
-    c.run(
-        f"twine upload dist/*{version}.tar.gz -u __token__ -p $TWINE_PASSWORD"
-    )
+    twine_pw = os.environ.get("TWINE_PASSWORD")
+    if twine_pw:
+        c.run(
+            f"twine upload dist/*{version}.tar.gz -u __token__ -p $TWINE_PASSWORD"
+        )
+    else:
+        c.run(f"twine upload dist/*{version}.tar.gz")
 
 
 @task
