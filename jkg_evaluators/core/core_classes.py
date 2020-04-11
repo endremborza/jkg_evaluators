@@ -1,6 +1,6 @@
-from typing import Callable, Union, Optional, List, Type
 import random
 from copy import deepcopy
+from typing import Callable, List, Optional, Type, Union
 
 
 class EvaluationCaseResult:
@@ -54,47 +54,24 @@ class EvalCase:
 
 
 class CompleteEvaluation:
-    def __init__(self, case_kwarg_list: List[dict], case: Type[EvalCase]):
+    def __init__(
+        self,
+        get_case_kwarg_list: Callable[[], List[dict]],
+        case: Type[EvalCase],
+    ):
 
         self.case = case
-        self.case_kwarg_list = case_kwarg_list
+        self.case_kwarg_list_getter = get_case_kwarg_list
+        self.case_kwarg_list = []
+
+    def _load(self):
+        self.case_kwarg_list = self.case_kwarg_list_getter()
         self.case_results_list = [EvaluationCaseResult()] * len(
-            case_kwarg_list
+            self.case_kwarg_list
         )
-        self.success_list = [False] * len(case_kwarg_list)
-        self.error_list = [None] * len(case_kwarg_list)
-        self.performance_list = [None] * len(case_kwarg_list)
-
-    def evaluate(self, solution: Callable):
-        self._run_all(solution)
-        print(self)
-
-    def visualize(self, solution: Callable):
-
-        import matplotlib.pyplot as plt
-
-        self._run_all(solution)
-
-        data = self._get_performance_plot()
-        plt.figure(figsize=(11, 7))
-
-        for label, ser in data.items():
-            if label != self.case.main_complexity_var:
-                if label == "-Successes":
-                    marker = None
-                else:
-                    marker = "o"
-                plt.plot(
-                    self.case.main_complexity_var,
-                    label,
-                    marker=marker,
-                    linestyle="",
-                    data=data,
-                )
-        plt.ylabel("performance")
-        plt.xlabel(self.case.main_complexity_var)
-        plt.legend()
-        plt.show()
+        self.success_list = [False] * len(self.case_kwarg_list)
+        self.error_list = [None] * len(self.case_kwarg_list)
+        self.performance_list = [None] * len(self.case_kwarg_list)
 
     def _run_all(self, solution: Callable):
 
@@ -223,6 +200,39 @@ class CompleteEvaluation:
             if sum([e is None for e in ser]) < len(ser):
                 out[label] = ser
         return out
+
+    def evaluate(self, solution: Callable):
+        if not self.case_kwarg_list:
+            self._load()
+        self._run_all(solution)
+        print(self)
+
+    def visualize(self, solution: Callable):
+
+        import matplotlib.pyplot as plt
+
+        self._run_all(solution)
+
+        data = self._get_performance_plot()
+        plt.figure(figsize=(11, 7))
+
+        for label, ser in data.items():
+            if label != self.case.main_complexity_var:
+                if label == "-Successes":
+                    marker = None
+                else:
+                    marker = "o"
+                plt.plot(
+                    self.case.main_complexity_var,
+                    label,
+                    marker=marker,
+                    linestyle="",
+                    data=data,
+                )
+        plt.ylabel("performance")
+        plt.xlabel(self.case.main_complexity_var)
+        plt.legend()
+        plt.show()
 
     def __str__(self):
 

@@ -1,7 +1,6 @@
 import os
-
-from typing import Optional
 import zipfile
+from typing import Optional
 
 
 def zipdir_walk(path, ziph):

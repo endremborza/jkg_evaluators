@@ -1,12 +1,13 @@
+import itertools
+import json
 import os
 import shutil
-import json
 import subprocess
 import time
-import itertools
-import yaml
-import pandas as pd
+
 import numpy as np
+import pandas as pd
+import yaml
 
 
 class SolutionComparator:

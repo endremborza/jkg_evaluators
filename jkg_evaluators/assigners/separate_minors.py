@@ -1,10 +1,9 @@
 import json
-import random
 import os
+import random
+from typing import Optional
 
 from jkg_evaluators.util import zip_dir
-
-from typing import Optional
 
 
 def dump_separated_minor_nb(
@@ -22,9 +21,7 @@ def dump_separated_minor_nb(
             start_ind = idx
             end_ind = idx + 4
             task_cell_lists.append(cells[start_ind:end_ind])
-
     random.shuffle(members)
-
     os.makedirs(output_directory, exist_ok=True)
 
     for idx, member in enumerate(members):

@@ -1,6 +1,6 @@
-from jkg_evaluators.core import CasePerformance, EvalCase, CompleteEvaluation
-
 from typing import Callable
+
+from jkg_evaluators.core import CasePerformance, CompleteEvaluation, EvalCase
 
 
 class BasicEggCase(EvalCase):
@@ -39,10 +39,13 @@ class BasicEggCase(EvalCase):
             return True
 
 
-eggdrop_100floor_2egg = CompleteEvaluation(
-    case_kwarg_list=[
+def get_egg_kwargs():
+    return [
         {"egg_count": 2, "floor_count": 100, "max_floor": i}
         for i in range(0, 101)
-    ],
-    case=BasicEggCase,
+    ]
+
+
+eggdrop_100floor_2egg = CompleteEvaluation(
+    get_case_kwarg_list=get_egg_kwargs, case=BasicEggCase,
 )

@@ -1,21 +1,25 @@
 1. dragon finding challenge
 ---------------------------
 
-    we need to find a dragon in the kingdom that is eating the cows. the
-    dragon starts with the largest cow and works its way towards the
-    smaller ones. we have a list of cows by their size due to the annual
-    cow weighing championships, we can use that to find the cow where
-    the dragon is expected next.
+   we need to find a dragon in the kingdom that is eating the cows. the
+   dragon starts with the largest cow and works its way towards the
+   smaller ones. we have a list of cows by their size due to the annual
+   cow weighing championships, we can use that to find the cow where the
+   dragon is expected next.
 
 a solution is a function where
 
 parameters:
 
--  is\_dead: function
--  it takes an integer parameter of the cows rank in the weight contest
-   and returns a boolean value of whether a cow is dead or not
--  number\_of\_cows: int
--  the number of cows in the kingdom
+-  is_dead: function
+
+   -  it takes an integer parameter of the cows rank in the weight
+      contest and returns a boolean value of whether a cow is dead or
+      not
+
+-  number_of_cows: int
+
+   -  the number of cows in the kingdom
 
 returns:
 

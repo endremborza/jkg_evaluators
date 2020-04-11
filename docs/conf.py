@@ -1,3 +1,10 @@
+import toml
+import datetime
+import os
+import sys
+
+sys.path.insert(0, os.path.abspath(".."))
+
 # Configuration file for the Sphinx documentation builder.
 #
 # This file only contains a selection of the most common options. For a full
@@ -17,9 +24,11 @@
 
 # -- Project information -----------------------------------------------------
 
-project = "jkg_evaluators"
-copyright = "2019, Endre Márk Borza"
-author = "Endre Márk Borza"
+pytom = toml.load("../pyproject.toml")
+
+project = pytom["project"]["name"]
+author = " - ".join(pytom["project"]["authors"])
+copyright = "{}, {}".format(datetime.datetime.now().year, author)
 
 
 # -- General configuration ---------------------------------------------------
@@ -29,6 +38,10 @@ author = "Endre Márk Borza"
 # ones.
 extensions = [
     "sphinx.ext.autodoc",
+    "sphinx.ext.autosummary",
+    "sphinx_automodapi.automodapi",
+    "sphinx_automodapi.smart_resolver",
+    "sphinx.ext.graphviz",
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -54,11 +67,4 @@ html_static_path = ["_static"]
 
 
 # -- Extension configuration -------------------------------------------------
-extensions.append("sphinx.ext.autosummary")
-extensions.append("sphinx_automodapi.automodapi")
-extensions.append("sphinx_automodapi.smart_resolver")
-extensions.append("sphinx.ext.graphviz")
-import os, sys
-
-sys.path.insert(0, os.path.abspath(".."))
 master_doc = "index"

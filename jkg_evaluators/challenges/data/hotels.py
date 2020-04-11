@@ -1,9 +1,11 @@
-import shutil
-import os
 import json
+import os
 import random
-import pandas as pd
+import shutil
+
 import numpy as np
+import pandas as pd
+
 from .comparator_class import SolutionComparator
 
 
@@ -23,7 +25,7 @@ def _create_hotel_filter_input(size):
             "lat": (random.betavariate(3, 3) - 0.5) * 125,
             "lon": (random.betavariate(3, 3) - 0.5) * 300,
             "stars": np.linspace(0, 5, 11)[np.random.randint(11)],
-            **_get_price_pair()
+            **_get_price_pair(),
         }
         for _ in range(size)
     ]
@@ -31,8 +33,7 @@ def _create_hotel_filter_input(size):
 
 def _get_price_pair():
     prices = np.sort(np.random.exponential(70, size=2))
-    return {'min_price': prices[0],
-            'max_price': prices[1]}
+    return {"min_price": prices[0], "max_price": prices[1]}
 
 
 class HotelSolutionComparator(SolutionComparator):

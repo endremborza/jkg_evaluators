@@ -1,6 +1,6 @@
-from jkg_evaluators.core import CasePerformance, EvalCase, CompleteEvaluation
-
 from typing import Callable
+
+from jkg_evaluators.core import CasePerformance, CompleteEvaluation, EvalCase
 
 
 class DragonFindCase(EvalCase):
@@ -27,14 +27,20 @@ class DragonFindCase(EvalCase):
         return k < self.dragon_coming_to
 
 
-dragon_kwargs_list = []
+def get_dragon_kwargs():
+    dragon_kwargs_list = []
 
-for cownum in range(10, 501):
-    for _dragon_coming_to in range(1, cownum):
-        dragon_kwargs_list.append(
-            {"number_of_cows": cownum, "dragon_coming_to": _dragon_coming_to}
-        )
+    for cownum in range(10, 501):
+        for _dragon_coming_to in range(1, cownum):
+            dragon_kwargs_list.append(
+                {
+                    "number_of_cows": cownum,
+                    "dragon_coming_to": _dragon_coming_to,
+                }
+            )
+    return dragon_kwargs_list
+
 
 dragonfind_10_to_500 = CompleteEvaluation(
-    case_kwarg_list=dragon_kwargs_list, case=DragonFindCase
+    get_case_kwarg_list=get_dragon_kwargs, case=DragonFindCase
 )

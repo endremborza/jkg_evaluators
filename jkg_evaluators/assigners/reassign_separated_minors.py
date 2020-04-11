@@ -1,11 +1,11 @@
+import itertools
 import json
 import os
-import itertools
+from typing import Optional
+
 import unidecode
 
 from jkg_evaluators.util import get_code_nb_cell, get_md_nb_cell, zip_dir
-
-from typing import Optional
 
 
 def distribute_originals(

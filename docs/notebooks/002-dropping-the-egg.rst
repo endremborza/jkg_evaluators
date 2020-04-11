@@ -1,22 +1,23 @@
 2. egg-drop challenge
 ---------------------
 
-    we have a 100 story building and 2 eggs. we want to check what is
-    the highest floor from where we can throw out an egg and it doesn't
-    break. we want to find this out for sure by attempting the least
-    amount of throws possible
+   we have a 100 story building and 2 eggs. we want to check what is the
+   highest floor from where we can throw out an egg and it doesn’t
+   break. we want to find this out for sure by attempting the least
+   amount of throws possible
 
 a solution is a function where
 
 parameters:
 
 -  a function
--  it takes an integer parameter of the floor number and returns a
-   boolean value of whether the egg breaks or not
+
+   -  it takes an integer parameter of the floor number and returns a
+      boolean value of whether the egg breaks or not
 
 returns:
 
--  an integer, the number of the highest floor where the egg doesn't
+-  an integer, the number of the highest floor where the egg doesn’t
    break
 
 it throws the egg the least amount of times possible, after it breaks

@@ -14,6 +14,7 @@ doc_notebooks_dir = "notebooks"
 @task
 def build(c):
 
+    c.run(f"rm -rf {doc_dir_name}")
     c.run(
         'sphinx-quickstart {} -p {} -a "{}" -q --ext-autodoc'.format(
             doc_dir_name, package_name, author_name

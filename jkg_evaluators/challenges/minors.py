@@ -1,9 +1,13 @@
-import string
-import random
-
-from jkg_evaluators.core import CasePerformance, EvalCase, CompleteEvaluation
-
+from collections import Counter
 from typing import Callable
+
+from jkg_evaluators.core import CasePerformance, CompleteEvaluation, EvalCase
+from jkg_evaluators.input_kwarg_generators import (
+    get_num_lists,
+    get_numberlists_with_numbers,
+    get_word_lists,
+    get_words_with_letter,
+)
 
 
 class IndexWithMostALetters(EvalCase):
@@ -250,83 +254,67 @@ class LastWithThreeMultDiff(EvalCase):
         )
 
 
-word_lists = [
-    {"list_of_words": ["b", "bb", "bBb"]},
-    {"list_of_words": ["aa", "aaa", "aa", "a"]},
-    {"list_of_words": ["ba", "babab", "AaAaA", "Ahha"]},
-    {"list_of_words": ["123", "lala", "", "", "", "aA"]},
-]
+class LongestWithThreeSame(EvalCase):
+    performance_bigger_better = True
 
-num_lists = [
-    {"list_of_numbers": [0, 1, 2, 3, 4]},
-    {"list_of_numbers": [0, 0, 10, 3, 10]},
-    {"list_of_numbers": [-20, -40, 0, 1, 2, 3, 40]},
-    {"list_of_numbers": [-1100, 100, 20]},
-    {"list_of_numbers": [0, 1]},
-    {"list_of_numbers": [21, 120, 220]},
-]
+    def __init__(self, list_of_words: list):
+        self.list_of_words = list_of_words
 
-random.seed(42)
-for _r in range(10, 501):
-    word_lists.append(
-        {
-            "list_of_words": [
-                "".join(
-                    random.choices(
-                        string.ascii_letters + string.digits,
-                        k=random.randint(0, 120),
-                    )
-                )
-                for _ in range(_r)
-            ]
-        }
-    )
+    def _evaluate(self, solution: Callable) -> CasePerformance:
 
-    num_lists.append(
-        {"list_of_numbers": [random.randint(-1000, 1000) for _ in range(_r)]}
-    )
+        true_solution = ""
 
-words_with_letter = [
-    {"letter": random.choice(string.ascii_letters), **kwargs}
-    for kwargs in word_lists
-]
+        for w in self.list_of_words:
+            if (max(Counter(w.lower()).values(), default=0) >= 3) and (
+                len(w) > len(true_solution)
+            ):
+                true_solution = w
 
-numberlists_with_numebrs = [
-    {"number": random.randint(1, 10), **kwargs} for kwargs in num_lists
-]
+        out = solution(self.list_of_words)
+        is_success = out == true_solution
+
+        return CasePerformance(
+            is_successful=is_success, performance=int(is_success)
+        )
+
 
 string_with_most_a_letters = CompleteEvaluation(
-    case_kwarg_list=word_lists, case=IndexWithMostALetters
+    get_case_kwarg_list=get_word_lists, case=IndexWithMostALetters
 )
 
 letter_occurrences = CompleteEvaluation(
-    case_kwarg_list=words_with_letter, case=LetterOccurrences
+    get_case_kwarg_list=get_words_with_letter, case=LetterOccurrences
 )
 
 word_with_most_of_letters = CompleteEvaluation(
-    case_kwarg_list=words_with_letter, case=WordWithMostOfLetter
+    get_case_kwarg_list=get_words_with_letter, case=WordWithMostOfLetter
 )
 
 largest_multiple = CompleteEvaluation(
-    case_kwarg_list=num_lists, case=LargestMultiple
+    get_case_kwarg_list=get_num_lists, case=LargestMultiple
 )
 
 sum_odd_positives = CompleteEvaluation(
-    case_kwarg_list=num_lists, case=SumOfDistinctOddPosInts
+    get_case_kwarg_list=get_num_lists, case=SumOfDistinctOddPosInts
 )
 
 largest_ascending_num = CompleteEvaluation(
-    case_kwarg_list=num_lists, case=LargestAscending
+    get_case_kwarg_list=get_num_lists, case=LargestAscending
 )
 
 smallest_where_double_also = CompleteEvaluation(
-    case_kwarg_list=num_lists, case=SmallestWhereDoubleAlso
+    get_case_kwarg_list=get_num_lists, case=SmallestWhereDoubleAlso
 )
 
 largest_even_divided = CompleteEvaluation(
-    case_kwarg_list=numberlists_with_numebrs, case=LargestEvenDivided
+    get_case_kwarg_list=get_numberlists_with_numbers, case=LargestEvenDivided
 )
 
 last_with_three_multiple_difference = CompleteEvaluation(
-    case_kwarg_list=numberlists_with_numebrs, case=LastWithThreeMultDiff
+    get_case_kwarg_list=get_numberlists_with_numbers,
+    case=LastWithThreeMultDiff,
+)
+
+longest_with_three_same_letters = CompleteEvaluation(
+    get_case_kwarg_list=get_word_lists, case=LongestWithThreeSame
 )
