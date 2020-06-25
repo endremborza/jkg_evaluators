@@ -2,3 +2,4 @@
 
 python package, for evaluating programming challenges
 
+[docs](https://jkg-evaluators.readthedocs.io/en/latest/index.html)
