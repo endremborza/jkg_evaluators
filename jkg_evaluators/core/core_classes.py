@@ -201,11 +201,21 @@ class CompleteEvaluation:
                 out[label] = ser
         return out
 
-    def evaluate(self, solution: Callable):
+    def evaluate(self, solution: Callable, return_output = False):
         if not self.case_kwarg_list:
             self._load()
         self._run_all(solution)
         print(self)
+        
+        if return_output:
+            success_rate = sum(self.success_list) / len(self.case_kwarg_list)
+            if success_rate == 1:
+                out = True
+            else:
+                out = False
+            return out
+
+        else: pass
 
     def visualize(self, solution: Callable):
 
