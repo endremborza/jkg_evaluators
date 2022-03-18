@@ -209,13 +209,7 @@ class CompleteEvaluation:
         
         if return_output:
             success_rate = sum(self.success_list) / len(self.case_kwarg_list)
-            if success_rate == 1:
-                out = True
-            else:
-                out = False
-            return out
-
-        else: pass
+            return success_rate == 1
 
     def visualize(self, solution: Callable):
 
