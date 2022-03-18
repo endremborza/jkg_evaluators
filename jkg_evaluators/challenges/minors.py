@@ -23,7 +23,7 @@ class IndexWithMostALetters(EvalCase):
         true_solution = -1
         top_num_as = 0
         for idx, word in enumerate(self.list_of_words):
-            act = sum([l.lower() == "a" for l in word])
+            act = sum([_l.lower() == "a" for _l in word])
             if act > top_num_as:
                 true_solution = idx
                 top_num_as = act

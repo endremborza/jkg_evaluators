@@ -7,7 +7,7 @@ from .vars import package_name, doc_notebooks_dir
 
 
 @task
-def test(c, option="", html=False, xml=False, notebook_tests=True):
+def test(c, option="", html=False, xml=False, notebook_tests=False):
 
     comm = "python -m pytest --cov={}".format(package_name)
     if option:
@@ -45,4 +45,4 @@ def test(c, option="", html=False, xml=False, notebook_tests=True):
             fp.write("\n\n".join(new_test_scripts))
 
     c.run(comm)
-    c.run("rm {}/tests/test_nb_integrations.py".format(package_name))
+    c.run("rm -f {}/tests/test_nb_integrations.py".format(package_name))
