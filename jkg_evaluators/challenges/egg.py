@@ -47,5 +47,6 @@ def get_egg_kwargs():
 
 
 eggdrop_100floor_2egg = CompleteEvaluation(
-    get_case_kwarg_list=get_egg_kwargs, case=BasicEggCase,
+    get_case_kwarg_list=get_egg_kwargs,
+    case=BasicEggCase,
 )
