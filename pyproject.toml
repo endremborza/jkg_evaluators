@@ -1,14 +1,14 @@
 [project]
 name = "jkg_evaluators"
+version = "0.0.4"
 description = "Educational package"
 authors = [
-    "Endre Márk Borza"
+    {name = "Endre Márk Borza"}
 ]
-license = "MIT"
+license = {file =  "LICENSE"}
 readme = "README.md"
-python = ">=3.7"
-url = "https://github.com/endremborza/jkg_evaluators"
-keywords="education"
+requires-python = ">=3.7"
+keywords=["education"]
 [build-system]
 requires = [
     "toml >= 0.10.0",
@@ -16,3 +16,6 @@ requires = [
     "wheel >= 0.31.0",
     "setuptools_scm >= 2.0.0, <3"
 ]
+
+[project.urls]
+repository = "https://github.com/endremborza/jkg_evaluators"
