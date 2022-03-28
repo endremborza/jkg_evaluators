@@ -4,7 +4,7 @@ from setuptools import find_packages, setup
 
 pytom = toml.load("pyproject.toml")
 package_name = pytom["project"]["name"]
-author_name = " - ".join(pytom["project"]["authors"])
+author_name = " - ".join(pytom["project"]["authors"][0]["name"])
 
 mymodule = importlib.import_module(package_name)
 
@@ -24,12 +24,12 @@ if __name__ == "__main__":
         long_description_content_type="text/markdown",
         license="MIT",
         classifiers=["License :: OSI Approved :: MIT License"],
-        url=pytom["project"]["url"],
+        url=pytom["project"]["urls"]["repository"],
         keywords=pytom["project"].get("keywords"),
         author=author_name,
         packages=find_packages(),
         include_package_data=True,
-        python_requires=pytom["project"]["python"],
+        python_requires=pytom["project"]["requires-python"],
         platforms="any",
         install_requires=requirements,
     )
