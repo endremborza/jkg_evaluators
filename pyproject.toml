@@ -1,6 +1,6 @@
 [project]
 name = "jkg_evaluators"
-version = "0.0.4"
+version = "0.0.5"
 description = "Educational package"
 authors = [
     {name = "Endre Márk Borza"}
